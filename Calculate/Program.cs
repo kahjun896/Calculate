@@ -22,6 +22,7 @@ namespace Calculate
                 {
                     break;
                 }
+                //Checking for unmatch amount of parentheses
                 else if (sum.Count(x => x == '(') != sum.Count(x => x == ')'))
                 {
                     Console.WriteLine("Number of '(' & ')' does not match");
@@ -38,6 +39,7 @@ namespace Calculate
         {
             List<string> words = sum.Split(' ').ToList();
 
+            //Always operate on operations with parentheses first
             while(words.Contains("("))
             {
                 List<string> chars = new List<string>{ "*","/"};
@@ -51,13 +53,16 @@ namespace Calculate
                 words.Insert(startIndex, evaluatedVal.First());
             }
 
+            //Perform remaining operations without parenthses
             Evaluator(words);
 
             return Math.Round(Convert.ToDouble(words.First()),2);
         }
 
+        //Performs expression evaluation, loops until it gets a single numeric value
         public static List<string> Evaluator(List<string> values)
         {
+            //Multiplication and division is performed first
             if (values.Contains("*") || values.Contains("/"))
             {
                 int firstOpr = 0;
@@ -87,6 +92,7 @@ namespace Calculate
                 }
             }
             else
+            //Summation and subtraction performed later
             {
                 int firstOpr = 0;
 
